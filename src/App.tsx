@@ -1,25 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+
+import { login } from './msalInstance'
+import RecentEmails from "./RecentEmails";
 
 function App() {
+
+  const [loginResult, setLoginResult] = useState<any>();
+  const [error, setError] = useState<Error>();
+
+  useEffect(() => {
+    if (!loginResult) {
+      login()
+        .then((loginResult) => {
+          setLoginResult(loginResult);
+        })
+        .catch((err) => {
+          setError(err);
+        });
+    }
+  }, [loginResult]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <p>Anyone can see this paragraph.</p>
+      {loginResult ? (
+        <>
+          <p>Signed in as: {loginResult?.account?.userName}</p>
+          <RecentEmails accessToken={loginResult?.accessToken} />
+        </>
+      ) : (
+        <>
+          <p>No users are signed in!</p>
+        </>
+      )}
+      <p>{error?.message}</p>
+    </>
   );
 }
 

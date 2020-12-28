@@ -1,5 +1,5 @@
 {
-  "name": "auto-generated-operations",
+  "name": "sdk",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,13 +14,28 @@
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
     "typescript": "^4.0.3",
+    "@graphql-mesh/runtime": "0.10.8",
+    "@graphql-mesh/odata": "0.7.9",
+    "@graphql-mesh/cache-localforage": "0.4.29",
+    "@graphql-mesh/merger-stitching": "0.7.8",
+    "graphql-subscriptions": "1.1.0",
+    "graphql": "15.4.0",
     "web-vitals": "^0.2.4"
   },
+  "devDependencies": {
+    "@graphql-mesh/cli": "0.14.1",
+    "customize-cra": "1.0.0",
+    "react-app-rewired": "2.1.8",
+    "ts-node": "9.0.0"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "SKIP_PREFLIGHT_CHECK=true react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject",
+    "generate-sdk": "ts-node  -O \"{ \\\"module\\\": \\\"commonjs\\\", \\\"esModuleInterop\\\": true }\" scripts/generateSdk.ts",
+    "serve-mesh": "ts-node  -O \"{ \\\"module\\\": \\\"commonjs\\\", \\\"esModuleInterop\\\": true }\" scripts/serve.ts",
+    "dump-schema": "ts-node  -O \"{ \\\"module\\\": \\\"commonjs\\\", \\\"esModuleInterop\\\": true }\" scripts/dumpSchema.ts"
   },
   "eslintConfig": {
     "extends": [
